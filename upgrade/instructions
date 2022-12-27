@@ -1,0 +1,15 @@
+Update Venus OS
+Create root password
+Use winSCP to move files to /lib/firmware/brcm/
+
+
+brcmfmac43436-sdio.bin
+brcmfmac43436-sdio.clm_blob
+brcmfmac43436-sdio.txt
+BCM43430B0.hcd
+
+and create a softlink
+
+ln -s /lib/firmware/brcm/BCM43430B0.hcd /lib/firmware/brcm/BCM.hcd
+or
+ln -s brcmfmac43436-sdio.txt brcmfmac43436-sdio.raspberrypi,model-zero-2-w.txt
