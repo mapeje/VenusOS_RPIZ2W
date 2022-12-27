@@ -1,0 +1,370 @@
+[
+    {
+        "id": "0c85026bc262724b",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "41c98bb9f7576da3",
+        "type": "victron-input-relay",
+        "z": "0c85026bc262724b",
+        "service": "com.victronenergy.system/0",
+        "path": "/Relay/0/State",
+        "serviceObj": {
+            "service": "com.victronenergy.system/0",
+            "name": "Venus system"
+        },
+        "pathObj": {
+            "path": "/Relay/0/State",
+            "type": "enum",
+            "name": "Venus relay 1 state",
+            "enum": {
+                "0": "Open",
+                "1": "Closed"
+            }
+        },
+        "initial": "",
+        "name": "",
+        "x": 760,
+        "y": 240,
+        "wires": [
+            [
+                "c89074fbf1ef9f76"
+            ]
+        ]
+    },
+    {
+        "id": "96447de703266770",
+        "type": "victron-input-temperature",
+        "z": "0c85026bc262724b",
+        "service": "com.victronenergy.temperature/101",
+        "path": "/Temperature",
+        "serviceObj": {
+            "service": "com.victronenergy.temperature/101",
+            "name": "1Wire Sensor"
+        },
+        "pathObj": {
+            "path": "/Temperature",
+            "type": "float",
+            "name": "Temperature (C)"
+        },
+        "name": "1-W",
+        "x": 150,
+        "y": 320,
+        "wires": [
+            [
+                "6091b905c8e01fdf"
+            ]
+        ]
+    },
+    {
+        "id": "c89074fbf1ef9f76",
+        "type": "debug",
+        "z": "0c85026bc262724b",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "ee5faacf865e90ae",
+        "type": "victron-output-relay",
+        "z": "0c85026bc262724b",
+        "service": "com.victronenergy.system/0",
+        "path": "/Relay/0/State",
+        "serviceObj": {
+            "service": "com.victronenergy.system/0",
+            "name": "Venus device"
+        },
+        "pathObj": {
+            "path": "/Relay/0/State",
+            "type": "enum",
+            "name": "Venus relay 1 state",
+            "enum": {
+                "0": "Open",
+                "1": "Closed"
+            },
+            "writable": true
+        },
+        "name": "",
+        "x": 760,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "53e16e18d1817033",
+        "type": "inject",
+        "z": "0c85026bc262724b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 450,
+        "y": 220,
+        "wires": [
+            [
+                "ee5faacf865e90ae"
+            ]
+        ]
+    },
+    {
+        "id": "ab1973a70b966ac7",
+        "type": "inject",
+        "z": "0c85026bc262724b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [
+                "ee5faacf865e90ae"
+            ]
+        ]
+    },
+    {
+        "id": "4e07730ffa3bf0d8",
+        "type": "victron-input-temperature",
+        "z": "0c85026bc262724b",
+        "service": "com.victronenergy.temperature/20",
+        "path": "/Temperature",
+        "serviceObj": {
+            "service": "com.victronenergy.temperature/20",
+            "name": "RuuviTag"
+        },
+        "pathObj": {
+            "path": "/Temperature",
+            "type": "float",
+            "name": "Temperature (C)"
+        },
+        "name": "BTE",
+        "x": 150,
+        "y": 160,
+        "wires": [
+            [
+                "6091b905c8e01fdf"
+            ]
+        ]
+    },
+    {
+        "id": "97010d83b282b0d6",
+        "type": "switch",
+        "z": "0c85026bc262724b",
+        "name": "<18Deg",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lt",
+                "v": "18",
+                "vt": "str"
+            },
+            {
+                "t": "gt",
+                "v": "18",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 300,
+        "y": 160,
+        "wires": [
+            [
+                "0d037ac7a490d9a5"
+            ],
+            [
+                "1bee14b13476dabb"
+            ]
+        ]
+    },
+    {
+        "id": "1bee14b13476dabb",
+        "type": "change",
+        "z": "0c85026bc262724b",
+        "name": "OFF",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 180,
+        "wires": [
+            [
+                "ee5faacf865e90ae"
+            ]
+        ]
+    },
+    {
+        "id": "0d037ac7a490d9a5",
+        "type": "change",
+        "z": "0c85026bc262724b",
+        "name": "ON",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 140,
+        "wires": [
+            [
+                "ee5faacf865e90ae"
+            ]
+        ]
+    },
+    {
+        "id": "6091b905c8e01fdf",
+        "type": "debug",
+        "z": "0c85026bc262724b",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 300,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "ac0262be0a058a3e",
+        "type": "victron-input-digitalinput",
+        "z": "0c85026bc262724b",
+        "service": "com.victronenergy.digitalinput/1",
+        "path": "/State",
+        "serviceObj": {
+            "service": "com.victronenergy.digitalinput/1",
+            "name": "Door alarm"
+        },
+        "pathObj": {
+            "path": "/State",
+            "type": "enum",
+            "name": "Digital input state",
+            "enum": {
+                "0": "low",
+                "1": "high",
+                "2": "off",
+                "3": "on",
+                "4": "no",
+                "5": "yes",
+                "6": "open",
+                "7": "closed",
+                "8": "ok",
+                "9": "alarm",
+                "10": "running",
+                "11": "stopped"
+            }
+        },
+        "initial": "",
+        "name": "",
+        "x": 200,
+        "y": 420,
+        "wires": [
+            [
+                "f8fab2e0661b9be4"
+            ]
+        ]
+    },
+    {
+        "id": "aa473fffc4885db5",
+        "type": "debug",
+        "z": "0c85026bc262724b",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "f8fab2e0661b9be4",
+        "type": "switch",
+        "z": "0c85026bc262724b",
+        "name": "Open/close",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "6",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "7",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 450,
+        "y": 420,
+        "wires": [
+            [
+                "aa473fffc4885db5",
+                "0d037ac7a490d9a5"
+            ],
+            [
+                "1bee14b13476dabb"
+            ]
+        ]
+    }
+]
